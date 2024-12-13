@@ -20,6 +20,20 @@ function SingleBook()
     }, [bookId]);
     console.log('Book ID:', bookId);
 
+
+    useEffect(() =>
+    {
+        fetch('https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/reservations', {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((result) => setReservations(result))
+      .catch((error) => console.error('Error fetching reservations:', error));
+    }, []);
+
     const handleCheckout = () => 
     {
       fetch(`https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/reservations`, 

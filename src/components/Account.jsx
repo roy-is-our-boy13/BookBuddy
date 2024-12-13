@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 function Account()
 {
     const [user, setUser] = useState(null);
+    const [reservations, setReservations] = useState([]);
 
     useEffect(() => 
     {
@@ -29,9 +30,27 @@ function Account()
             }
         };
         
+        const fetchReservations = async () => {
+            try {
+              const response = await fetch('https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/reservations', {
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${localStorage.getItem('token')}`,
+                },
+              });
+      
+              const data = await response.json();
+              setReservations(data);
+            } catch (error) {
+              console.error('Error fetching reservations:', error);
+            }
+          };
+
         fetchUser();
+        fetchReservations();
     }, []);
     
+
     return (
         <>
           <div>
@@ -41,10 +60,15 @@ function Account()
                 <p>Email: {user.email}</p>
                 <h3>Your Checked-Out Books:</h3>
                 <ul>
-                  {user.books && user.books.length > 0 ? (
-                    user.books.map((book) => (
-                      <li key={book.id}>
-                        <p>{book.title}</p>
+                  {reservations && reservations.length > 0 ? (
+                    reservations.map((reservation) => (
+                      <li key={reservation.id}>
+                        <p>{reservation.title} by {reservation.author}</p>
+                        <img
+                          src={reservation.coverimage}
+                          alt={reservation.title}
+                          style={{ width: '100px', height: 'auto' }}
+                        />
                       </li>
                     ))
                   ) : (
