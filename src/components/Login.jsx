@@ -40,7 +40,8 @@ function Login({ setToken })
             localStorage.setItem('token', result.token);
            
             setToken(result.token);
-            navigate('/account');
+            navigate('/account', { replace: true });
+            window.location.reload();
         }
         catch(error)
         {

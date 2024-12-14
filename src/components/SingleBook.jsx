@@ -34,33 +34,30 @@ function SingleBook()
       .catch((error) => console.error('Error fetching reservations:', error));
     }, []);
 
-    const handleCheckout = () => 
-    {
-      fetch(`https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/reservations`, 
-      {
-          method: 'POST',
-          
-          headers: 
-          {
+    const handleCheckout = async () => {
+      try {
+        const response = await fetch(`https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books/${bookId}`, {
+          method: 'PATCH',
+          headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('token')}`,
           },
-
-          body: JSON.stringify({ bookId: book.id }),
-      }).then((response) =>
-        {
-            if (!response.ok) 
-            {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-
-            return response.json();
-      }).then((result) => 
-        {
-            console.log("API response for reservations:", result);
-            navigate('/account'); 
-        }).catch((error) => console.error("Error fetching reservations:", error));
-  };
+          body: JSON.stringify({ available: false }),
+        });
+    
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+    
+        const result = await response.json();
+        console.log("Book updated:", result);
+    
+        
+        navigate('/account');
+      } catch (error) {
+        console.error("Error updating book availability:", error);
+      }
+    };
 
     return(
         <>
