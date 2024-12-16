@@ -83,18 +83,4 @@ function SingleBook()
               <div className='singleBookBackground'>
                 <h2>{book.title}</h2>
                 <p>Author: {book.author}</p>
-                <p>{book.description}</p>
-                <img src={book.coverimage} alt={book.title} style={{ width: '200px', height: '250px' }} /><br></br>
-              </div>
-              <button onClick={handleCheckout} className='buttonStyle'>
-                Checkout
-              </button>
-            </div>
-          ) : (
-            <p>Book Details Loading...</p>
-          )}
-          </div>
-        </>
-    );
-}
-export default SingleBook;
+         

@@ -18,11 +18,4 @@ const Navigations = ({ isAuthenticated, onLogout }) =>
                 </>) : (
             <>
           <Link to="/account">My Account</Link>
-          <button onClick={onLogout} className='buttonStyle'>Logout</button>
-        </>)}
-    </nav>
-    </>
-  );
-};
-
-export default Navigations;
+          <button onClick={

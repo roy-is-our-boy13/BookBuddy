@@ -74,10 +74,4 @@ function Register({ setToken })
             Password: 
             <input type="text" name="password" value={formData.password} onChange={handleChange}/><br></br>
         </lable>
-        <button type="submit" className='buttonStyle'>Register</button>
-      </form>
-      </>
-    );
-  }
-  
-  export default Register;
+        <button type="submit" className='buttonStyle'>Register
