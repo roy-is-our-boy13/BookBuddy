@@ -75,4 +75,4 @@ function Login({ setToken })
     );
 };
 
-expor
+export default Login;
