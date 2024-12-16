@@ -42,7 +42,7 @@ function Login({ setToken })
            
             setToken(result.token);
             navigate('/account');
-            window.location.reload();
+            
         }
         catch(error)
         {

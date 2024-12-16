@@ -54,8 +54,6 @@ function App()
       localStorage.removeItem('token');
       setToken(null);
       setUser(null);
-
-      window.location.reload();
   };
 
   return(
