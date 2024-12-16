@@ -1,27 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import bookLogo from './assets/books.png';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import { Link,  useNavigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useNavigate } from 'react-router-dom';
 import Book from './components/Books.jsx';
 import SingleBook from './components/SingleBook.jsx';
 import Login from './components/Login.jsx';
 import Register from './components/Register.jsx';
 import Account from './components/Account.jsx';
 import Navigations from './components/Navigations.jsx';
+import './index.css';
 
 function App() 
 {
-  const [token, setToken] = useState(localStorage.getItem('token') || null);
+  const [token, setToken] = useState(localStorage.getItem('token'));
   const [user, setUser] = useState(null);
   //const navigate = useNavigate();
-  
+
   useEffect(() => 
   {
     if(token)
     {
       const fetchUser = async () => 
       {
-          try {
+          try 
+          {
             const response = await fetch(`https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/users/me`,
               {
                 headers: 
@@ -53,12 +54,13 @@ function App()
       localStorage.removeItem('token');
       setToken(null);
       setUser(null);
+
+      window.location.reload();
   };
 
-  
-  return (
-    <div>
-      <header>
+  return(
+    <div className='divBody'>
+      <header className='mainLogo'>
         <h1>
           <img id="logo-image" src={bookLogo} alt="Library Logo" />
           Library App
@@ -72,8 +74,7 @@ function App()
             <Route path="/books/:bookId" element={<SingleBook />} />
             <Route path="/login" element={<Login setToken={setToken} />} />
             <Route path="/register" element={<Register setToken={setToken} />} />
-            <Route path="/account" element={user ? <Account user={user} /> : <Navigate to="/login" />} />
-            <Route path="*" element={<Navigate to="/" />} />
+            <Route path="/account" element={<Account user={user} />} />
         </Routes>
       </Router>
     </div>

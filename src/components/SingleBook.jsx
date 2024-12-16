@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import '../index.css';
 
 function SingleBook() 
 {
@@ -20,60 +21,77 @@ function SingleBook()
     }, [bookId]);
     console.log('Book ID:', bookId);
 
-
     useEffect(() =>
     {
-        fetch('https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/reservations', {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`,
-      },
-    })
+      fetch('https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/reservations', 
+      {
+        headers: 
+        {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${localStorage.getItem('token')}`,
+        },
+      })
       .then((response) => response.json())
       .then((result) => setReservations(result))
       .catch((error) => console.error('Error fetching reservations:', error));
     }, []);
 
-    const handleCheckout = async () => {
-      try {
-        const response = await fetch(`https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books/${bookId}`, {
-          method: 'PATCH',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('token')}`,
-          },
-          body: JSON.stringify({ available: false }),
-        });
+    const handleCheckout = async () => 
+    {
+      try 
+      {
+          const token = localStorage.getItem('token');
+
+          if (!token) 
+          {
+              alert("To Checkout a Book, you must be Signed In or Registered.");
+              return;
+          }
+
+          const response = await fetch(`https://fsa-book-buddy-b6e748d1380d.herokuapp.com/api/books/${bookId}`, 
+          {
+            method: 'PATCH',
+            headers: 
+            {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({ available: false }),
+          });
     
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
+          if (!response.ok) 
+          {
+            throw new Error(`HTTP error! status: ${response.status}`);
+          }
+      
+          const result = await response.json();
+          console.log("Updated Book:", result);
     
-        const result = await response.json();
-        console.log("Book updated:", result);
-    
-        
-        navigate('/account');
-      } catch (error) {
-        console.error("Error updating book availability:", error);
+          navigate('/account');
+      } 
+      catch (error) 
+      {
+          console.error("Error updating book availability:", error);
       }
     };
 
     return(
         <>
-          <div>
+          <div className='singleBookDiv'>
           {book ? (
             <div>
-              <h2>{book.title}</h2>
-              <p>Author: {book.author}</p>
-              <p>{book.description}</p>
-              <img src={book.coverimage} alt={book.title} style={{ width: '150px', height: 'auto' }} /><br></br>
-              <button onClick={handleCheckout}>
+              <div className='singleBookBackground'>
+                <h2>{book.title}</h2>
+                <p>Author: {book.author}</p>
+                <p>{book.description}</p>
+                <img src={book.coverimage} alt={book.title} style={{ width: '200px', height: '250px' }} /><br></br>
+              </div>
+              <button onClick={handleCheckout} className='buttonStyle'>
                 Checkout
               </button>
             </div>
           ) : (
-            <p>Loading book details...</p>
+            <p>Book Details Loading...</p>
           )}
           </div>
         </>

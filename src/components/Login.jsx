@@ -1,6 +1,7 @@
 /* TODO - add your code to create a functional React component that renders a login form */
 import React, { useState } from 'react';
 import { Link,  useNavigate } from 'react-router-dom';
+import '../index.css';
 
 function Login({ setToken }) 
 {
@@ -40,7 +41,7 @@ function Login({ setToken })
             localStorage.setItem('token', result.token);
            
             setToken(result.token);
-            navigate('/account', { replace: true });
+            navigate('/account');
             window.location.reload();
         }
         catch(error)
@@ -57,18 +58,18 @@ function Login({ setToken })
 
     return(
       <>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className='formStyle'>
         <br></br>
             <label>
                 Email:
-                <input type="email" name="email" value={formData.email} onChange={handleChange} /><br></br>
+                <input type="email" name="email" value={formData.email} onChange={handleChange} />
             </label>
             <br></br>
             <label>
                 Password:
                 <input type="password" name="password" value={formData.password} onChange={handleChange} /><br></br>
             </label>
-            <button type="submit">Login</button>
+            <button type="submit" className='buttonStyle'>Login</button>
         </form>
       </>
     );

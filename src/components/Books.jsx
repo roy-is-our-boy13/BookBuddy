@@ -1,6 +1,7 @@
 /* TODO - add your code to create a functional React component that displays all of the available books in the library's catalog. Fetch the book data from the provided API. Users should be able to click on an individual book to navigate to the SingleBook component and view its details. */
 import React, { useState, useEffect } from 'react';
 import { Link,  useNavigate } from 'react-router-dom';
+import '../index.css';
 
 function Book() 
 {
@@ -28,7 +29,7 @@ function Book()
   return (
     <>
       <div>
-        <h2>Books</h2>
+        <h2 className='pageTitle'>Books</h2>
         <div>
           <label>
             Search:{" "}
@@ -39,9 +40,9 @@ function Book()
           {books && books.length > 0 ? ( booksToDisplay.map((book) => (
               <li key={book.id}>
                 <h3>{book.title}</h3>
-                <img src={book.coverimage} alt={book.title} style={{ width: "150px", height: "auto" }}/>
+                <img src={book.coverimage} alt={book.title} style={{ width: '200px', height: '250px'  }}/>
                 <br />
-                <button onClick={() => handleBookClick(book.id)} style={{ cursor: "pointer" }}>
+                <button onClick={() => handleBookClick(book.id)} style={{ cursor: "pointer" }} className='buttonStyle'>
                   See Details
                 </button>
               </li>

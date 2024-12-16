@@ -1,12 +1,14 @@
 /* TODO - add your code to create a functional React component that renders a registration form */
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import '../index.css';
 
 function Register({ setToken }) 
 {
     const navigate = useNavigate();
 
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState(
+    {
       firstname: '',
       lastname: '',
       email: '',
@@ -55,7 +57,7 @@ function Register({ setToken })
   
     return (
       <>
-      <form onSubmit={handleSubmit}><br></br>
+      <form onSubmit={handleSubmit} className="formStyle"><br></br>
         <label>
           First Name:
           <input type="text" name="firstname" value={formData.firstname} onChange={handleChange} /><br></br>
@@ -72,7 +74,7 @@ function Register({ setToken })
             Password: 
             <input type="text" name="password" value={formData.password} onChange={handleChange}/><br></br>
         </lable>
-        <button type="submit">Register</button>
+        <button type="submit" className='buttonStyle'>Register</button>
       </form>
       </>
     );
